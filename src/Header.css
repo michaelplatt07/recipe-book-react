@@ -1,0 +1,178 @@
+@media (max-device-width: 479px) {
+    .header-container
+    {
+	width: 100%;
+	height: 100px;
+	background-color: #c5c5c5;
+	border-bottom: 5px solid #000000
+    }
+
+    .home-container
+    {
+	display: inline;
+	float: left;
+	height: 100%;
+    }
+
+    .home-container p
+    {
+	display: none;
+    }
+    
+    .home-icon
+    {
+	height: 100%;
+    }
+
+    .search-container
+    {
+	display: inline;
+	float: right;
+	height: 100%;
+    }
+
+    .search-container p
+    {
+	display: none;
+    }
+    
+    .search-icon
+    {
+	height: 100%;
+    }
+
+    .filter-container
+    {
+	display: inline;
+	float: right;
+	height: 100%;
+    }
+
+    .filter-container p
+    {
+	display: none;
+    }
+    
+    .filter-icon
+    {
+	height: 100%;
+    }
+
+    .add-container
+    {
+	display: inline;
+	float: right;
+	height: 100%;
+    }
+
+    .add-container p
+    {
+	display: none;
+    }
+    
+    .add-icon
+    {
+	height: 100%;
+    }
+}
+
+@media (min-device-width: 480px) {
+    .header-container
+    {
+	width: calc(100% - 20px);
+	height: 20px;
+	background-color: #c5c5c5;
+	border-bottom: 5px solid #000000;
+	padding: 10px;
+    }
+
+    .home-container
+    {
+	display: inline;
+	float: left;
+	height: 100%;
+    }
+
+    .home-container p
+    {
+	display: block;
+	margin: 0px;
+    }
+    
+    .home-icon
+    {
+	display: none;
+    }
+
+    .search-container
+    {
+	display: inline;
+	float: right;
+	height: 100%;
+    }
+
+    .search-container p
+    {
+	display: block;
+	margin: 0px;
+    }
+    
+    .search-icon
+    {
+	display: none;
+    }
+
+    .filter-container
+    {
+	display: inline;
+	float: right;
+	height: 100%;
+    }
+
+    .filter-container p
+    {
+	display: block;
+	margin: 0px;
+    }
+    
+    .filter-icon
+    {
+	display: none;
+    }
+
+    .add-container
+    {
+	display: inline;
+	float: right;
+	height: 100%;
+    }
+
+    .add-container p
+    {
+	display: block;
+	margin: 0px;
+    }
+    
+    .add-icon
+    {
+	display: none;
+    }
+
+    .login-container
+    {
+	display: inline;
+	float: right;
+	height: 100%;
+    }
+
+    .login-container p
+    {
+	display: block;
+	margin: 0px;
+    }
+    
+    .login-icon
+    {
+	display: none;
+    }
+}
