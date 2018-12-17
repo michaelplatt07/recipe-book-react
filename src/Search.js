@@ -23,6 +23,7 @@ export default class Search extends Component {
         this.setState({ executingSearch: true });
         this.queryApi(this.formApi.getState().values.searchParams).then((res) => {
             this.setState({ recipes: res.data.recipes });
+            this.setState({ searchExecuted: true });
             this.setState({ executingSearch: false });
         });
     }
