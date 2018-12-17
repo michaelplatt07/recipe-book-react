@@ -19,38 +19,22 @@ export default class Search extends Component {
         this.setFormApi = this.setFormApi.bind(this);
     }
     
-    handleClick() {
+    handleClick = () => {
         this.setState({ executingSearch: true });
         this.queryApi(this.formApi.getState().values.searchParams).then((res) => {
-            this.setState({ recipes: recipesResult.data.recipes });
-        ));
+            this.setState({ recipes: res.data.recipes });
+            this.setState({ executingSearch: false });
+        });
     }
 
-/*
-    handleClick = async() => {
-        this.setState({ executingSearch: true });
-        try {
-            const recipesResult = await queryApi(this.formApi.getState().values.searchParams);
-            this.setState({ recipes: recipesResult.data.recipes });
-        }
-        catch (err) {
-            console.log("TODO(map) : Add error catching here for no results coming back.");
-        }
-        console.log("TODO(map) : REMOVE ME : Executing Search => ", this.state.executingSearch);
-        console.log("TODO(map) : REMOVE ME : Search Executed => ", this.state.searchExecuted);
-        this.setState({ executingSearch: false });
-        this.setState({ searchExecuted: true });
-    }
-*/
+    queryApi = (searchParams) => {
+        const formattedSearchParams = searchParams.split(" ").join("+");
+        const queryParams = `?ingredients=${formattedSearchParams}&course=${formattedSearchParams}&submitted_by=${formattedSearchParams}&cuisine=${formattedSearchParams}`;
+        return axios.get('http://localhost:3000/recipes/search' + queryParams); 
+    };
 
     setFormApi = (formApi) => {
         this.formApi = formApi;
-    }
-
-    componentWillUnmount = () => {
-        console.log("TODO(map) : REMOVE ME : We are unmounting.");
-        this.setState({ executingSearch: false });
-        // TODO(map) : Need to figure out how to cancel request here to fix memory leak.
     }
     
     render() {
@@ -75,9 +59,3 @@ export default class Search extends Component {
     }
 
 }
-
-const queryApi = (searchParams) => {
-    const formattedSearchParams = searchParams.split(" ").join("+");
-    const queryParams = `?ingredients=${formattedSearchParams}&course=${formattedSearchParams}&submitted_by=${formattedSearchParams}&cuisine=${formattedSearchParams}`;
-    return axios.get('http://localhost:3000/recipes/search' + queryParams); 
-};
