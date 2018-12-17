@@ -19,13 +19,13 @@ export default class Search extends Component {
         this.setFormApi = this.setFormApi.bind(this);
     }
     
-    handleClick = () => {
+    handleClick = async () => {
         this.setState({ executingSearch: true });
-        this.queryApi(this.formApi.getState().values.searchParams).then((res) => {
-            this.setState({ recipes: res.data.recipes });
-            this.setState({ searchExecuted: true });
-            this.setState({ executingSearch: false });
-        });
+        const recipeResults = await this.queryApi(this.formApi.getState().values.searchParams);
+        console.log(recipeResults.data.recipes);
+	this.setState({ recipes: recipeResults.data.recipes });
+        this.setState({ searchExecuted: true });
+        this.setState({ executingSearch: false });
     }
 
     queryApi = (searchParams) => {
