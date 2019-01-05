@@ -1,9 +1,56 @@
 import React, { Component } from 'react';
+import { Form, Text } from 'informed';
+import cookie from 'react-cookies';
+
+const crypto = require('crypto');
+const axios = require('axios');
 
 export default class Login extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            
+        };
+
+        this.handleClick = this.handleClick.bind(this);
+        this.setFormApi = this.setFormApi.bind(this);
+    }
+
+    handleClick = async () => {
+        const cipher = crypto.createCipher('aes-128-cbc', 'baseSecret');
+        var encryptedPass = cipher.update(this.formApi.getState().values.password, 'utf8', 'hex');
+        encryptedPass += cipher.final('hex');
+
+        console.log("IN THE LOGIN CLICK");
+        console.log(this.props);
+        const res = await axios.post('http://localhost:3000/users/login', { username: this.formApi.getState().values.username , password: encryptedPass });
+        console.log(res.data.token);
+
+        // This is for if i ever want to expire the cookie based on a time.  For now I'm leaving it at session.
+        //const expires =  new Date(Date.now() + 30000);
+        //cookie.save('Authorization', `JWT ${res.data.token}`, { path: '/', expires });
+        
+        cookie.save('Authorization', `JWT ${res.data.token}`, { path: '/' });
+    };
+
+    setFormApi = (formApi) => {
+        this.formApi = formApi;
+    }
+
     render() {
+        if (cookie.load('Authorization')) {
+            return "You are already logged in.";
+        }
         return (
-            "On the Login Page."
+            <div>
+              <Form id="login-form" getApi={this.setFormApi}>
+                <label htmlFor="username">Username: </label><Text type="text" id="username" field="username" /><br />
+                <label htmlFor="password">Password: </label><Text type="password" id="password" field="password" /><br />
+              </Form>
+              <button onClick={this.handleClick}>LOGIN</button>
+            </div>
         );
     }
 }
+
