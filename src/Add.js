@@ -7,7 +7,11 @@ export default class Add extends Component {
         super(props);
 
         this.state = {
-            ingredients: ["Ingredient1","Ingredient2"]
+            name: "",
+            prep_time: "",
+            cook_time: "",
+            ingredients: ["Ingredient1","Ingredient2"],
+            instructions: []
         };
 
         this.handleClick = this.handleClick.bind(this);
@@ -25,7 +29,11 @@ export default class Add extends Component {
         console.log(this.state.ingredients);
     };
     
-    handleChange = (e) => {
+    ingredientChange = (e) => {
+        const index = e.target.id.split("-").pop();
+        const updatedList = this.state.ingredients;
+        updatedList[index] = e.target.value;
+        this.setState({ ingredients: updatedList });
     }
     
     addIngredient = (e) => {
@@ -35,18 +43,38 @@ export default class Add extends Component {
     }
 
     removeIngredient = (e) => {
-        console.log(`In the remove ingredient with value ${e.target.value}`);
         let newList = this.state.ingredients.filter((ingredient) => {
             return ingredient !== e.target.value;
         });
         
         this.setState({ ingredients: newList });
     }
+
+    instructionChange = (e) => {
+        const index = e.target.id.split("-").pop();
+        const updatedList = this.state.instructions;
+        updatedList[index] = e.target.value;
+        this.setState({ instructions: updatedList });
+    }
+
+    addInstruction = (e) => {
+        this.setState((prevState) => ({
+            instructions: [...prevState.instructions, ""],
+        }));
+    }
+
+    removeInstruction = (e) => {
+        let newList = this.state.instructions.filter((instruction) => {
+            return instruction !== e.target.value;
+        });
+        
+        this.setState({ instructions: newList });
+    }
     
     render() {
         return (
             <div>
-              <Form id="upload-form" getApi={this.setFormApi} onChange={this.handleChange}>
+              <Form id="upload-form" getApi={this.setFormApi}>
                 <p>
                   Please include the following information about the recipe:
                 </p>
@@ -55,11 +83,23 @@ export default class Add extends Component {
                 <div id="ingredients">
                   {
                       this.state.ingredients.map((ingredient, index) => {
-                          console.log(ingredient);
                           let ingredientIndex = `ingredient-${index}`;
                           return (
                               <div key={index}>
-                                <input type="text" id={ingredientIndex} field={ingredient} value={ingredient} onChange={this.handleChange} /><button value={ingredient} onClick={this.removeIngredient}>-</button>
+                                <input type="text" id={ingredientIndex} field={ingredient} value={ingredient} index={index} onChange={this.ingredientChange} /><button value={ingredient} onClick={this.removeIngredient}>-</button>
+                              </div>
+                          );
+                      })
+                  }
+                </div>
+                <label htmlFor="instructions">Instructions: </label><button onClick={this.addInstruction}>+</button>
+                <div id="instructions">
+                  {
+                      this.state.instructions.map((instruction, index) => {
+                          let instructionIndex = `instruction-${index}`;
+                          return (
+                              <div key={index}>
+                                <input type="text" id={instructionIndex} field={instruction} value={instruction} index={index} onChange={this.instructionChange} /><button value={instruction} onClick={this.removeInstruction}>-</button>
                               </div>
                           );
                       })
