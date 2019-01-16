@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Text, Select, Option, Checkbox } from 'informed';
+import { Form, Text, TextArea, Select, Option, Checkbox } from 'informed';
 import { Route, Redirect } from 'react-router';
 
 const axios = require('axios');
@@ -18,7 +18,7 @@ export default class Add extends Component {
             courses: [],
             ingredients: [],
             instructions: [],
-
+            
             baseCourses: [],
             baseCuisines: []
         };
@@ -27,46 +27,9 @@ export default class Add extends Component {
         this.setFormApi = this.setFormApi.bind(this);
     }
 
-    async componentDidMount() {
-        /*
-          this.setState({ baseCuisines: ["African",
-          "American",
-          "British",
-          "Carribean",
-          "Chinese",
-          "East European",
-          "French",
-          "Greek",
-          "Indian",
-          "Irish",
-          "Italian",
-          "Japanese",
-          "Korean",
-          "Mexican",
-          "Nordic",
-          "North African",
-          "Pakistani",
-          "Portuguese",
-          "South American",
-          "Spanish",
-          "Thai and Southeat-Asian",
-          "Middle Eastern and Persian",
-          "Other"
-          ] });
-
-          this.setState({ baseCourses: ["Breakfast",
-          "Brunch",
-          "Lunch",
-          "Dinner",
-          "Snack",
-          "Dessert"
-          ] });
-        */
-        
-        // TODO(map) : Switch to an API call to populate cuisines and courses once I implement it
+    async componentDidMount() {        
         const courseResults = await axios.get('http://localhost:3000/courses');
         const cuisineResults = await axios.get('http://localhost:3000/cuisines');
-        console.log(courseResults.data.courses);
         this.setState({ baseCourses: courseResults.data.courses, baseCuisines: cuisineResults.data.cuisines });
     }
     
@@ -76,15 +39,45 @@ export default class Add extends Component {
 
     handleClick = async () => {
         console.log("TODO(map) : RECIPE AS IT STANDS: ");
-        console.log(this.state);
+        console.log(this.formatRecipe());
+        const res = await axios.post('http://localhost:3000/recipes/add', {});
     };
 
+    formatRecipe = () => {
+        // TODO(map) : Switch this out to get a dynamic list of measurements allowed.
+        const measurements = ["tsp","Tbsp","c","q","lb", "oz"];
+
+        // NOTE(map) : Formatting the ingredients here
+        const formattedIngredientList = [];
+        this.state.ingredients.forEach((ingredient) => {
+            const splitIngredients = ingredient.split(" ");
+            if (measurements.some(measurement => splitIngredients[1] === measurement)) {
+                formattedIngredientList.push({
+                    quantity: ingredient.split(" ")[0],
+                    measurement: ingredient.split(" ")[1],
+                    name: ingredient.split(" ").slice(2).join(" "),
+                });  
+            }
+            else {
+                formattedIngredientList.push({
+                    quantity: splitIngredients[0],
+                    measurement: "",
+                    name: splitIngredients.slice(1).join(" "),
+                });
+            }
+        });
+
+        
+        return formattedIngredientList;
+        // const formattedRecipe = {};
+        // return formattedRecipe;
+    }
+    
     textPropertyChange = (e) => {
         this.setState({ [e.target.name]: e.target.value }); 
     }
 
     checkboxPropertyChange = (e) => {
-        console.log(e.target.checked);
         this.setState({ [e.target.name]: e.target.checked }); 
     }
     
@@ -193,7 +186,7 @@ export default class Add extends Component {
                   }
                 </div>
                 <br />
-                <label htmlFor="description">Description: </label><Text type="text" id="description" field="descriptiont" onChange={this.textPropertyChange} /><br />
+                <label htmlFor="description">Description: </label><TextArea type="text" id="description" field="descriptiont" onChange={this.textPropertyChange} /><br />
                 <label htmlFor="status">Public: </label>
                 <Checkbox field="status" id="status" onChange={this.checkboxPropertyChange} />
                 <br />
