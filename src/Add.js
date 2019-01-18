@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { Form, Text, TextArea, Select, Option, Checkbox } from 'informed';
 import { Route, Redirect } from 'react-router';
+import ReactTooltip from 'react-tooltip';
+import cookie from 'react-cookies';
 
+const _ = require('lodash');
 const axios = require('axios');
 
 export default class Add extends Component {
@@ -20,7 +23,10 @@ export default class Add extends Component {
             instructions: [],
             
             baseCourses: [],
-            baseCuisines: []
+            baseCuisines: [],
+            measurementTypes: [],
+
+            errors: [],
         };
 
         this.handleClick = this.handleClick.bind(this);
@@ -30,7 +36,8 @@ export default class Add extends Component {
     async componentDidMount() {        
         const courseResults = await axios.get('http://localhost:3000/courses');
         const cuisineResults = await axios.get('http://localhost:3000/cuisines');
-        this.setState({ baseCourses: courseResults.data.courses, baseCuisines: cuisineResults.data.cuisines });
+        const measurementResults = await axios.get('http://localhost:3000/measurements');
+        this.setState({ baseCourses: courseResults.data.courses, baseCuisines: cuisineResults.data.cuisines, measurementTypes: measurementResults.data.measurements });
     }
     
     setFormApi = (formApi) => {
@@ -38,39 +45,60 @@ export default class Add extends Component {
     }
 
     handleClick = async () => {
+        const headers = {'Authorization': cookie.load('Authorization')};
         console.log("TODO(map) : RECIPE AS IT STANDS: ");
         console.log(this.formatRecipe());
-        const res = await axios.post('http://localhost:3000/recipes/add', {});
+        const recipe = this.formatRecipe();
+        try {
+            const res = await axios.post('http://localhost:3000/recipes/add', recipe, {headers: headers});
+            console.log(res);
+        }
+        catch (error) {
+            console.log(error.response.data.msg);
+            const errors = [];
+            _.forOwn(error.response.data.msg, (value, key) => {
+                errors.push(value);
+            });
+            console.log(errors);
+            this.setState({errors: errors});
+        }
     };
 
     formatRecipe = () => {
-        // TODO(map) : Switch this out to get a dynamic list of measurements allowed.
-        const measurements = ["tsp","Tbsp","c","q","lb", "oz"];
-
         // NOTE(map) : Formatting the ingredients here
         const formattedIngredientList = [];
         this.state.ingredients.forEach((ingredient) => {
             const splitIngredients = ingredient.split(" ");
-            if (measurements.some(measurement => splitIngredients[1] === measurement)) {
+            if (this.state.measurementTypes.some(measurement => splitIngredients[1] === measurement.name)) {
                 formattedIngredientList.push({
                     quantity: ingredient.split(" ")[0],
                     measurement: ingredient.split(" ")[1],
-                    name: ingredient.split(" ").slice(2).join(" "),
+                    text_friendly_name: ingredient.split(" ").slice(2).join(" "),
                 });  
             }
             else {
                 formattedIngredientList.push({
                     quantity: splitIngredients[0],
                     measurement: "",
-                    name: splitIngredients.slice(1).join(" "),
+                    text_friendly_name: splitIngredients.slice(1).join(" "),
                 });
             }
         });
 
         
-        return formattedIngredientList;
-        // const formattedRecipe = {};
-        // return formattedRecipe;
+        const formattedRecipe = {
+            text_friendly_name: this.state.name,
+            prep_time: this.state.prep_time,
+            cook_time: this.state.cook_time,
+            cuisine: this.state.cuisines,
+            description: this.state.description,
+            searchable: this.state.status,
+            course: this.state.courses,
+            ingredients: formattedIngredientList,
+            steps: this.state.instructions
+        };
+
+        return formattedRecipe;
     }
     
     textPropertyChange = (e) => {
@@ -131,14 +159,23 @@ export default class Add extends Component {
     render() {
         return (
             <div>
+              <ul>
+                {this.state.errors.map((error, index) => {
+                    const errorKey = `error-${index}`;
+                    return (
+                        <li key={errorKey}>{error}</li>
+                    );
+                })
+                }
+              </ul>
               <Form id="upload-form" getApi={this.setFormApi}>
                 <p>
                   Please include the following information about the recipe:
                 </p>
                 <label htmlFor="name">Name: </label><Text type="text" id="name" field="name" onChange={this.textPropertyChange} /><br />
-                <label htmlFor="prep_time">Prep Time: </label><Text type="text" id="prep_time" field="prep_time" onChange={this.textPropertyChange} />
-                <label htmlFor="cook_time">Cook Time: </label><Text type="text" id="cook_time" field="cook_time" onChange={this.textPropertyChange} /><br />
-                <label htmlFor="courses">Course: </label>
+                <label htmlFor="prep_time">Prep Time: </label><Text data-tip="Enter time in minutes" type="text" id="prep_time" field="prep_time" onChange={this.textPropertyChange} />
+                <label htmlFor="cook_time">Cook Time: </label><Text data-tip="Enter time in minutes" type="text" id="cook_time" field="cook_time" onChange={this.textPropertyChange} /><br />
+                <label htmlFor="courses" data-tip="Select as many courses as desired using CTRL and click">Course: </label>
                 <Select field="courses" id="courses" multiple onChange={this.multiPropertyChange}>
                   {
                       this.state.baseCourses.map((course, index) => {
@@ -148,7 +185,7 @@ export default class Add extends Component {
                           );
                       })
                   }                </Select><br />
-                <label htmlFor="cuisines">Cuisine: </label>
+                <label htmlFor="cuisines" data-tip="Select as many cuisines as desired using CTRL and click">Cuisine: </label>
                 <Select field="cuisines" id="cuisines" multiple onChange={this.multiPropertyChange}>
                   {
                       this.state.baseCuisines.map((cuisine, index) => {
@@ -159,7 +196,7 @@ export default class Add extends Component {
                       })
                   }
                 </Select><br />
-                <label htmlFor="ingredients">Ingredients: </label><button onClick={this.addIngredient}>+</button>
+                <label htmlFor="ingredients">Ingredients: </label><button data-tip="Ingredients should follow the format of NUMBER UNITS INGREDIENT.  If no units are needed (ie a whole carrot), simply exclude the units."onClick={this.addIngredient}>+</button>
                 <div id="ingredients">
                   {
                       this.state.ingredients.map((ingredient, index) => {
@@ -186,11 +223,12 @@ export default class Add extends Component {
                   }
                 </div>
                 <br />
-                <label htmlFor="description">Description: </label><TextArea type="text" id="description" field="descriptiont" onChange={this.textPropertyChange} /><br />
-                <label htmlFor="status">Public: </label>
+                <label htmlFor="description">Description: </label><TextArea type="text" id="description" field="description" onChange={this.textPropertyChange} /><br />
+                <label htmlFor="status" data-tip="For determining if you want to make the recipe searchable by others.">Public: </label>
                 <Checkbox field="status" id="status" onChange={this.checkboxPropertyChange} />
                 <br />
                 <button onClick={this.handleClick}>ADD</button>
+                <ReactTooltip />
               </Form>
             </div>
         );
