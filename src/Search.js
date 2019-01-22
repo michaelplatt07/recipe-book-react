@@ -22,16 +22,20 @@ export default class Search extends Component {
     handleClick = async () => {
         this.setState({ executingSearch: true });
         const recipeResults = await this.queryApi(this.formApi.getState().values.searchParams);
-        console.log(recipeResults.data.recipes);
-	this.setState({ recipes: recipeResults.data.recipes });
+        this.setState({ recipes: recipeResults.data.recipes });
         this.setState({ searchExecuted: true });
         this.setState({ executingSearch: false });
     }
 
     queryApi = (searchParams) => {
-        const formattedSearchParams = searchParams.split(" ").join("+");
-        const queryParams = `?ingredients=${formattedSearchParams}&course=${formattedSearchParams}&submitted_by=${formattedSearchParams}&cuisine=${formattedSearchParams}`;
-        return axios.get('http://localhost:3000/recipes/search' + queryParams); 
+        if (searchParams) {
+            const formattedSearchParams = searchParams.split(" ").join("+");
+            const queryParams = `?ingredients=${formattedSearchParams}&course=${formattedSearchParams}&submitted_by=${formattedSearchParams}&cuisine=${formattedSearchParams}`;
+            return axios.get('http://localhost:3000/recipes/search' + queryParams);
+        }
+        else {
+            return axios.get('http://localhost:3000/recipes/search');
+        }
     };
 
     setFormApi = (formApi) => {

@@ -3,6 +3,7 @@ import { Form, Text, TextArea, Select, Option, Checkbox } from 'informed';
 import { Route, Redirect } from 'react-router';
 import ReactTooltip from 'react-tooltip';
 import cookie from 'react-cookies';
+import UploadSucces from './UploadSuccess';
 
 const _ = require('lodash');
 const axios = require('axios');
@@ -26,6 +27,8 @@ export default class Add extends Component {
             baseCuisines: [],
             measurementTypes: [],
 
+            attemptedUpload: false,
+            successfulUpload: false,
             errors: [],
         };
 
@@ -45,21 +48,18 @@ export default class Add extends Component {
     }
 
     handleClick = async () => {
+        this.setState({attemptedUpload: true});
         const headers = {'Authorization': cookie.load('Authorization')};
-        console.log("TODO(map) : RECIPE AS IT STANDS: ");
-        console.log(this.formatRecipe());
         const recipe = this.formatRecipe();
         try {
             const res = await axios.post('http://localhost:3000/recipes/add', recipe, {headers: headers});
-            console.log(res);
+            this.setState({successfulUpload: true});
         }
         catch (error) {
-            console.log(error.response.data.msg);
             const errors = [];
             _.forOwn(error.response.data.msg, (value, key) => {
                 errors.push(value);
             });
-            console.log(errors);
             this.setState({errors: errors});
         }
     };
@@ -230,6 +230,11 @@ export default class Add extends Component {
                 <button onClick={this.handleClick}>ADD</button>
                 <ReactTooltip />
               </Form>
+              {this.state.successfulUpload &&
+               <Redirect to={{
+                   pathname: '/UploadSucces'                   
+               }}/>
+              }
             </div>
         );
     }
