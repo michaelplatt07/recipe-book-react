@@ -1,6 +1,34 @@
 Tasks to Complete
 
 
-* TODO Finish implementation of the recipe upload
+* DONE Finish implementation of the recipe upload
+  CLOSED: [2019-01-22 Tue 16:01]
 
-* TODO 
+* TODO Redirect from the Add page to the login page in the event that we aren't logged in.
+
+* TODO Style pages ‘[0/6]'
+  1) [ ] Home Page
+  2) [ ] Login Page
+  3) [ ] Search Page '[0/1]'
+     1) [ ] Search Results Page
+  4) [ ] Filter Page '[0/1]'
+     1) [ ] Filter Results page
+  5) [ ] Single Recipe Page
+  6) [ ] Upload Page
+
+* TODO Port over CSS '[0/6]'
+  1) [ ] Home Page
+  2) [ ] Login Page
+  3) [ ] Search Page
+  4) [ ] Filter Page
+  5) [ ] Single Recipe Page
+  6) [ ] Upload Page
+
+* TODO Add a create User Page '[0/5]'
+  This will involve a few steps:
+  - [ ] Create the page/form
+  - [ ] Style it
+  - [ ] Check to make sure email isn't already being used
+    - [ ] This also includes checking for BS emails
+  - [ ] Encrypt password
+  - [ ] Send data to database
