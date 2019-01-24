@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Form, Text } from 'informed';
-import cookie from 'react-cookies';
+import { Route, Redirect } from 'react-router';
 import Errors from './Errors';
+import LoginSuccess from './LoginSuccess';
+import cookie from 'react-cookies';
 
 const crypto = require('crypto');
 const axios = require('axios');
@@ -13,6 +15,8 @@ export default class Login extends Component {
         this.state = {
             errors: this.props.location.state ?
                 this.props.location.state.errors : [],
+
+            successfulLogin: false,
         };
         
         this.handleClick = this.handleClick.bind(this);
@@ -29,8 +33,9 @@ export default class Login extends Component {
         // This is for if i ever want to expire the cookie based on a time.  For now I'm leaving it at session.
         //const expires =  new Date(Date.now() + 30000);
         //cookie.save('Authorization', `JWT ${res.data.token}`, { path: '/', expires });
-        
         cookie.save('Authorization', `JWT ${res.data.token}`, { path: '/' });
+
+        this.setState({ successfulLogin: true });
     };
 
     setFormApi = (formApi) => {
@@ -38,9 +43,18 @@ export default class Login extends Component {
     }
 
     render() {
+        if (this.state.successfulLogin) {
+            return (
+                <Redirect to={{
+                    pathname: '/LoginSuccess',                   
+                }}/>
+            );
+        }
+
         if (cookie.load('Authorization')) {
             return "You are already logged in.";
         }
+
         return (
             <div>
 

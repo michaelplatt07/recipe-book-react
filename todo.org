@@ -21,10 +21,15 @@ Tasks to Complete
 * DONE Link the error page to all locations where it should be used.
   CLOSED: [2019-01-24 Thu 15:03]
 
-* TODO Fix login page
+* DONE Fix login page
+  CLOSED: [2019-01-24 Thu 15:49]
   It looks like when you successfully login the page isn't redirecting as it should be.  Need to make sure that 
   when you log in with success you either are taken to the previous page you were just at or to a successful
   login page.
+
+* TODO Have Login redirect
+  The login page currently just takes you to a successful login message if you login or to an already logged in page
+  if the user is already logged in.  It should really redirect to whatever page you wnated to go to.
 
 * TODO Break out some of the base functionality into a parent class that other classes can then extend.
 
@@ -38,7 +43,8 @@ Tasks to Complete
 
 * TODO Style pages ‘[0/7]'
   1. [ ] Home Page
-  2. [ ] Login Page
+  2. [ ] Login Page '[0/1]'
+     1. [ ] Login Success Page
   3. [ ] Search Page '[0/1]'
      1. [ ] Search Results Page
   4. [ ] Filter Page '[0/1]'

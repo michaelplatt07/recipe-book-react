@@ -8,6 +8,7 @@ import Search from './Search';
 import SearchResults from './SearchResults';
 import Add from './Add';
 import Login from './Login';
+import LoginSuccess from './LoginSuccess';
 import './App.css';
 
 class App extends Component {
@@ -24,6 +25,7 @@ class App extends Component {
                 <Route path="/searchResults" component={SearchResults} />
                 <Route path="/add" component={Add} />
                 <Route path="/login" component={Login} />
+                <Route path="/loginSuccess" component={LoginSuccess} />
               </div>
             </Router>
         );
