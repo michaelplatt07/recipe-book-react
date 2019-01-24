@@ -19,7 +19,8 @@ Tasks to Complete
 
 * TODO Break out some of the base functionality into a parent class that other classes can then extend.
 
-* TODO Fix the call to the filters once the API call is complete.
+* DONE Fix the call to the filters once the API call is complete.
+  CLOSED: [2019-01-24 Thu 13:33]
 
 * TODO Style pages ‘[0/7]'
   1. [ ] Home Page

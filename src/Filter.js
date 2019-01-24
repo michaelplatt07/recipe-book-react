@@ -38,43 +38,27 @@ export default class Filter extends Component {
 
     handleClick = async () => {
         this.setState({ executingFilter: true });
-        const recipeList = [];
-        const recipeIdSet = new Set();
 
         // TODO(map) : I don't think I like this solution but the lookup of the set seems to be quick so it
         // might work well enough for now.  Will have to test with a larger data set.
         // TODO(map) : Test this bit of code with something like a 3k dataset
+        var formattedParams = "?";
         if (this.state.courses.length > 0) {
-            const courseRes = await axios.get('http://localhost:3000/recipes/course?list=' + this.state.courses.join('+'));
-            _.forEach(courseRes.data.recipes, (recipe) => {
-                if (!recipeIdSet.has(recipe._id)) {
-                    recipeList.push(recipe);
-                    recipeIdSet.add(recipe._id);
-                }   
-            });
+            formattedParams += "courses=" + this.state.courses.join('+');
         }
-
         if (this.state.cuisines.length > 0) {
-            const cuisineRes = await axios.get('http://localhost:3000/recipes/cuisine?list=' + this.state.cuisines.join('+'));
-            _.forEach(cuisineRes.data.recipes, (recipe) => {
-                if (!recipeIdSet.has(recipe._id)) {
-                    recipeList.push(recipe);
-                    recipeIdSet.add(recipe._id);
-                }      
-            });
+            formattedParams += formattedParams.length > 1 ?
+                "&cuisines=" + this.state.cuisines.join('+') : "cuisines=" + this.state.cuisines.join('+');
         }
-
         if (this.state.ingredients.length > 0) {
-            const ingredientRes = await axios.get('http://localhost:3000/recipes/ingredients?list=' + this.state.ingredients.join('+'));
-            _.forEach(ingredientRes.data.recipes, (recipe) => {
-                 if (!recipeIdSet.has(recipe._id)) {
-                    recipeList.push(recipe);
-                    recipeIdSet.add(recipe._id);
-                }      
-            });
+            formattedParams += formattedParams.length > 1 ?
+                "&ingredients=" + this.state.ingredients.join('+') : "ingredients=" + this.state.ingredients.join('+');
         }
 
-        this.setState({ recipes: recipeList });
+        const requestUrl = 'http://localhost:3000/recipes/filter' + formattedParams;
+        const recipeList = await axios.get(requestUrl);
+
+        this.setState({ recipes: recipeList.data.recipes });
         this.setState({ fitlerExecuted: true });
         this.setState({ executingFilter: false });
 
