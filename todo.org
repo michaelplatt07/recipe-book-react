@@ -4,7 +4,14 @@ Tasks to Complete
 * DONE Finish implementation of the recipe upload
   CLOSED: [2019-01-22 Tue 16:01]
 
-* TODO Redirect from the Add page to the login page in the event that we aren't logged in.
+* DONE Redirect from the Add page to the login page in the event that we aren't logged in.
+  CLOSED: [2019-01-24 Thu 13:10]
+  When redirecting we should include an error message saying why you can't hit the add page.
+
+* DONE Configure the Login page to accept error messages so we can pass it from the Add page.
+  CLOSED: [2019-01-24 Thu 13:10]
+
+* TODO Set up a configuration to be a single spot where the base URL for the Axios requests works.
 
 * TODO Create an errors page of some sort
   This error page is going to basically be like the results page where you will pass in a list of errors

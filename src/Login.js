@@ -10,13 +10,19 @@ export default class Login extends Component {
         super(props);
 
         this.state = {
-            
+            errors: [],
         };
 
         this.handleClick = this.handleClick.bind(this);
         this.setFormApi = this.setFormApi.bind(this);
     }
 
+    async componentDidMount() {
+        if (this.props.location.state) {
+            this.setState({ errors: this.props.location.state.errors });
+        }
+    }
+    
     handleClick = async () => {
         const cipher = crypto.createCipher('aes-128-cbc', 'baseSecret');
         var encryptedPass = cipher.update(this.formApi.getState().values.password, 'utf8', 'hex');
@@ -44,6 +50,15 @@ export default class Login extends Component {
         }
         return (
             <div>
+              <ul>
+                {this.state.errors.map((error, index) => {
+                    const errorKey = `error-${index}`;
+                    return (
+                        <li key={errorKey}>{error}</li>
+                    );
+                })
+                }
+              </ul>
               <Form id="login-form" getApi={this.setFormApi}>
                 <label htmlFor="username">Username: </label><Text type="text" id="username" field="username" /><br />
                 <label htmlFor="password">Password: </label><Text type="password" id="password" field="password" /><br />
