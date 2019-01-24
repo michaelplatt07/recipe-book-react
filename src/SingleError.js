@@ -13,7 +13,7 @@ export default class SingelError extends Component {
     render() {
         if (this.state.errorStatus) {
             return (
-                <li>`Error ${this.state.errorStatus}: ${this.state.errorMessage}`</li>
+                <li>Error {this.state.errorStatus}: {this.state.errorMessage}</li>
             );            
         }
         else {

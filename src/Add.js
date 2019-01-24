@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { Form, Text, TextArea, Select, Option, Checkbox } from 'informed';
 import { Route, Redirect } from 'react-router';
 import ReactTooltip from 'react-tooltip';
-import cookie from 'react-cookies';
 import UploadSucces from './UploadSuccess';
+import Errors from './Errors';
+import cookie from 'react-cookies';
 
 const _ = require('lodash');
 const axios = require('axios');
@@ -65,7 +66,7 @@ export default class Add extends Component {
         catch (error) {
             const errors = [];
             _.forOwn(error.response.data.msg, (value, key) => {
-                errors.push(value);
+                errors.push({status: 422, message: value});
             });
             this.setState({errors: errors});
         }
@@ -175,15 +176,9 @@ export default class Add extends Component {
         else {
             return (
                 <div>
-                  <ul>
-                    {this.state.errors.map((error, index) => {
-                        const errorKey = `error-${index}`;
-                        return (
-                            <li key={errorKey}>{error}</li>
-                        );
-                    })
-                    }
-                  </ul>
+
+                  <Errors errors={this.state.errors} />
+                  
                   <Form id="upload-form" getApi={this.setFormApi}>
                     <p>
                       Please include the following information about the recipe:
