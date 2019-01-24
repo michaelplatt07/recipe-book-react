@@ -168,7 +168,7 @@ export default class Add extends Component {
             return (
                 <Redirect to={{
                     pathname: '/Login',                   
-                    state: { errors: ['You must be logged in to add a new Recipe.  Please log in or create a new account.']}
+                    state: { errors: [{status: null, message:'You must be logged in to add a new Recipe.  Please log in or create a new account.'}]}
                 }}/>
             );
         }

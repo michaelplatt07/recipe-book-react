@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Form, Text } from 'informed';
 import cookie from 'react-cookies';
+import Errors from './Errors';
 
 const crypto = require('crypto');
 const axios = require('axios');
@@ -10,17 +11,12 @@ export default class Login extends Component {
         super(props);
 
         this.state = {
-            errors: [],
+            errors: this.props.location.state ?
+                this.props.location.state.errors : [],
         };
-
+        
         this.handleClick = this.handleClick.bind(this);
         this.setFormApi = this.setFormApi.bind(this);
-    }
-
-    async componentDidMount() {
-        if (this.props.location.state) {
-            this.setState({ errors: this.props.location.state.errors });
-        }
     }
     
     handleClick = async () => {
@@ -28,11 +24,8 @@ export default class Login extends Component {
         var encryptedPass = cipher.update(this.formApi.getState().values.password, 'utf8', 'hex');
         encryptedPass += cipher.final('hex');
 
-        console.log("IN THE LOGIN CLICK");
-        console.log(this.props);
         const res = await axios.post('http://localhost:3000/users/login', { username: this.formApi.getState().values.username , password: encryptedPass });
-        console.log(res.data.token);
-
+        
         // This is for if i ever want to expire the cookie based on a time.  For now I'm leaving it at session.
         //const expires =  new Date(Date.now() + 30000);
         //cookie.save('Authorization', `JWT ${res.data.token}`, { path: '/', expires });
@@ -50,15 +43,9 @@ export default class Login extends Component {
         }
         return (
             <div>
-              <ul>
-                {this.state.errors.map((error, index) => {
-                    const errorKey = `error-${index}`;
-                    return (
-                        <li key={errorKey}>{error}</li>
-                    );
-                })
-                }
-              </ul>
+
+              <Errors errors={this.state.errors} />
+
               <Form id="login-form" getApi={this.setFormApi}>
                 <label htmlFor="username">Username: </label><Text type="text" id="username" field="username" /><br />
                 <label htmlFor="password">Password: </label><Text type="password" id="password" field="password" /><br />
