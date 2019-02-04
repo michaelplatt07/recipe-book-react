@@ -7,7 +7,7 @@ import Errors from './Errors';
 import cookie from 'react-cookies';
 
 const _ = require('lodash');
-const axios = require('axios');
+const custom_axios = require('./custom_axios');
 
 export default class Add extends Component {
     constructor(props) {
@@ -44,9 +44,9 @@ export default class Add extends Component {
             this.setState({ redirect: true });
         }
         else {
-            const courseResults = await axios.get('http://localhost:3000/courses');
-            const cuisineResults = await axios.get('http://localhost:3000/cuisines');
-            const measurementResults = await axios.get('http://localhost:3000/measurements');
+            const courseResults = await custom_axios.get('/courses');
+            const cuisineResults = await custom_axios.get('/cuisines');
+            const measurementResults = await custom_axios.get('/measurements');
             this.setState({ baseCourses: courseResults.data.courses, baseCuisines: cuisineResults.data.cuisines, measurementTypes: measurementResults.data.measurements });
         }
     }
@@ -60,7 +60,7 @@ export default class Add extends Component {
         const headers = {'Authorization': cookie.load('Authorization')};
         const recipe = this.formatRecipe();
         try {
-            const res = await axios.post('http://localhost:3000/recipes/add', recipe, {headers: headers});
+            const res = await custom_axios.post('/recipes/add', recipe, {headers: headers});
             this.setState({successfulUpload: true});
         }
         catch (error) {
@@ -92,19 +92,19 @@ export default class Add extends Component {
                 });
             }
         });
-
         
         const formattedRecipe = {
             text_friendly_name: this.state.name,
             prep_time: this.state.prep_time,
             cook_time: this.state.cook_time,
-            cuisine: this.state.cuisines,
+            cuisines: this.state.cuisines,
             description: this.state.description,
             searchable: this.state.status,
-            course: this.state.courses,
+            courses: this.state.courses,
             ingredients: formattedIngredientList,
             steps: this.state.instructions
         };
+        console.log(formattedRecipe);
 
         return formattedRecipe;
     }
@@ -119,6 +119,7 @@ export default class Add extends Component {
     
     multiPropertyChange = (e) => {
         // NOTE(map) : This supposedly does not work in IE8, not sure I care though.        
+        console.log([...e.target.selectedOptions].map(option => option.value));
         this.setState({ [e.target.name]: [...e.target.selectedOptions].map(option => option.value) }); 
     }
     

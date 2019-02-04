@@ -6,7 +6,7 @@ import LoginSuccess from './LoginSuccess';
 import cookie from 'react-cookies';
 
 const crypto = require('crypto');
-const axios = require('axios');
+const custom_axios = require('./custom_axios');
 
 export default class Login extends Component {
     constructor(props) {
@@ -28,7 +28,7 @@ export default class Login extends Component {
         var encryptedPass = cipher.update(this.formApi.getState().values.password, 'utf8', 'hex');
         encryptedPass += cipher.final('hex');
 
-        const res = await axios.post('http://localhost:3000/users/login', { username: this.formApi.getState().values.username , password: encryptedPass });
+        const res = await custom_axios.post('/users/login', { username: this.formApi.getState().values.username , password: encryptedPass });
         
         // This is for if i ever want to expire the cookie based on a time.  For now I'm leaving it at session.
         //const expires =  new Date(Date.now() + 30000);

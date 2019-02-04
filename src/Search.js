@@ -3,7 +3,7 @@ import { Form, Text } from 'informed';
 import { Route, Redirect } from 'react-router';
 import SearchResults from './SearchResults';
 
-const axios = require('axios');
+const custom_axios = require('./custom_axios');
 
 export default class Search extends Component {
     constructor(props) {
@@ -31,10 +31,10 @@ export default class Search extends Component {
         if (searchParams) {
             const formattedSearchParams = searchParams.split(" ").join("+");
             const queryParams = `?ingredients=${formattedSearchParams}&course=${formattedSearchParams}&submitted_by=${formattedSearchParams}&cuisine=${formattedSearchParams}`;
-            return axios.get('http://localhost:3000/recipes/search' + queryParams);
+            return custom_axios.get('/recipes/search' + queryParams);
         }
         else {
-            return axios.get('http://localhost:3000/recipes/search');
+            return custom_axios.get('/recipes/search');
         }
     };
 

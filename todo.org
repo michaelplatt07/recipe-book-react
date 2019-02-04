@@ -11,7 +11,20 @@ Tasks to Complete
 * DONE Configure the Login page to accept error messages so we can pass it from the Add page.
   CLOSED: [2019-01-24 Thu 13:10]
 
-* TODO Set up a configuration to be a single spot where the base URL for the Axios requests works.
+* DONE Set up a configuration to be a single spot where the base URL for the Axios requests works.
+  CLOSED: [2019-02-04 Mon 11:28]
+
+* DONE Move Axios out to create a single instance 
+  CLOSED: [2019-02-04 Mon 11:53] - For now I'm just making a single instance and calling out with the URL I need.
+  This single instance should be initialized one time with the correct base URL from the config as well as maybe
+  make a call out to get all the available routes from the API.
+
+  I'm not sure how the I will gather the routes but I think it goes like this:
+  1. Hit the API and grab the necessary endpoints JSON
+  2. Use that to initialize Axios with the base URL
+  3. Create a series of switch statements to handle routing and calling GETs and POSTs
+
+  If this is not the correct way of doing it I will have to research the correct way to handle the calls.
 
 * DONE Create an errors page of some sort
   CLOSED: [2019-01-24 Thu 14:35]
@@ -30,6 +43,13 @@ Tasks to Complete
 * TODO Have Login redirect
   The login page currently just takes you to a successful login message if you login or to an already logged in page
   if the user is already logged in.  It should really redirect to whatever page you wnated to go to.
+
+* TODO Create Logout '[0/3]'
+  1. [ ] Create the link
+  2. [ ] Toggle between Log In/Out based on current status
+  3. [ ] Determine if cookie should expire on log out
+     1. [ ] If yes then expire cookie.
+     2. [ ] If not then figure out what logging out actually means
 
 * TODO Break out some of the base functionality into a parent class that other classes can then extend.
 

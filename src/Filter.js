@@ -4,7 +4,7 @@ import { Route, Redirect } from 'react-router';
 import ReactTooltip from 'react-tooltip';
 
 const _ = require('lodash');
-const axios = require('axios');
+const custom_axios = require('./custom_axios');
 
 export default class Filter extends Component {
     constructor(props) {
@@ -30,18 +30,15 @@ export default class Filter extends Component {
     }
 
     async componentDidMount() {        
-        const courseResults = await axios.get('http://localhost:3000/courses');
-        const cuisineResults = await axios.get('http://localhost:3000/cuisines');
-        const ingredientResults = await axios.get('http://localhost:3000/ingredients');
+        const courseResults = await custom_axios.get('/courses');
+        const cuisineResults = await custom_axios.get('/cuisines');
+        const ingredientResults = await custom_axios.get('/ingredients');
         this.setState({ baseCourses: courseResults.data.courses, baseCuisines: cuisineResults.data.cuisines, baseIngredients: ingredientResults.data.ingredients });
     }
 
     handleClick = async () => {
         this.setState({ executingFilter: true });
 
-        // TODO(map) : I don't think I like this solution but the lookup of the set seems to be quick so it
-        // might work well enough for now.  Will have to test with a larger data set.
-        // TODO(map) : Test this bit of code with something like a 3k dataset
         var formattedParams = "?";
         if (this.state.courses.length > 0) {
             formattedParams += "courses=" + this.state.courses.join('+');
@@ -55,8 +52,8 @@ export default class Filter extends Component {
                 "&ingredients=" + this.state.ingredients.join('+') : "ingredients=" + this.state.ingredients.join('+');
         }
 
-        const requestUrl = 'http://localhost:3000/recipes/filter' + formattedParams;
-        const recipeList = await axios.get(requestUrl);
+        const requestUrl = '/recipes/filter' + formattedParams;
+        const recipeList = await custom_axios.get(requestUrl);
 
         this.setState({ recipes: recipeList.data.recipes });
         this.setState({ fitlerExecuted: true });
