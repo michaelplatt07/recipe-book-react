@@ -175,4 +175,22 @@
     {
 	display: none;
     }
+
+    .logout-container
+    {
+	display: inline;
+	float: right;
+	height: 100%;
+    }
+
+    .logout-container p
+    {
+	display: block;
+	margin: 0px;
+    }
+    
+    .logout-icon
+    {
+	display: none;
+    }
 }

@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Form, Text } from 'informed';
-import { Route, Redirect } from 'react-router';
-import SearchResults from './SearchResults';
+import { Redirect } from 'react-router';
+import FormComponent from './FormComponent';
 
 const custom_axios = require('./custom_axios');
 
-export default class Search extends Component {
+export default class Search extends FormComponent {
     constructor(props) {
         super(props);
 
@@ -16,7 +16,6 @@ export default class Search extends Component {
         };
         
         this.handleClick = this.handleClick.bind(this);
-        this.setFormApi = this.setFormApi.bind(this);
     }
     
     handleClick = async () => {
@@ -37,10 +36,6 @@ export default class Search extends Component {
             return custom_axios.get('/recipes/search');
         }
     };
-
-    setFormApi = (formApi) => {
-        this.formApi = formApi;
-    }
     
     render() {
         return (

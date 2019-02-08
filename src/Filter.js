@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { Form, Text, TextArea, Select, Option, Checkbox } from 'informed';
-import { Route, Redirect } from 'react-router';
+import { Form, Select, Option } from 'informed';
+import { Redirect } from 'react-router';
 import ReactTooltip from 'react-tooltip';
 
-const _ = require('lodash');
 const custom_axios = require('./custom_axios');
 
 export default class Filter extends Component {
@@ -25,8 +24,6 @@ export default class Filter extends Component {
         };
         
         this.handleClick = this.handleClick.bind(this);
-        this.setFormApi = this.setFormApi.bind(this);
-
     }
 
     async componentDidMount() {        
@@ -59,15 +56,6 @@ export default class Filter extends Component {
         this.setState({ fitlerExecuted: true });
         this.setState({ executingFilter: false });
 
-    }
-
-    setFormApi = (formApi) => {
-        this.formApi = formApi;
-    }
-
-    multiPropertyChange = (e) => {
-        // NOTE(map) : This supposedly does not work in IE8, not sure I care though.        
-        this.setState({ [e.target.name]: [...e.target.selectedOptions].map(option => option.value) }); 
     }
     
     render() {

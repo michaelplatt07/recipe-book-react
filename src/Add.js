@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Form, Text, TextArea, Select, Option, Checkbox } from 'informed';
-import { Route, Redirect } from 'react-router';
+import { Redirect } from 'react-router';
 import ReactTooltip from 'react-tooltip';
-import UploadSucces from './UploadSuccess';
+import FormComponent from './FormComponent';
 import Errors from './Errors';
 import cookie from 'react-cookies';
 
 const _ = require('lodash');
 const custom_axios = require('./custom_axios');
 
-export default class Add extends Component {
+export default class Add extends FormComponent {
     constructor(props) {
         super(props);
 
@@ -36,7 +36,6 @@ export default class Add extends Component {
         };
 
         this.handleClick = this.handleClick.bind(this);
-        this.setFormApi = this.setFormApi.bind(this);
     }
 
     async componentDidMount() {        
@@ -51,16 +50,12 @@ export default class Add extends Component {
         }
     }
     
-    setFormApi = (formApi) => {
-        this.formApi = formApi;
-    }
-
     handleClick = async () => {
         this.setState({attemptedUpload: true});
         const headers = {'Authorization': cookie.load('Authorization')};
         const recipe = this.formatRecipe();
         try {
-            const res = await custom_axios.post('/recipes/add', recipe, {headers: headers});
+            await custom_axios.post('/recipes/add', recipe, {headers: headers});
             this.setState({successfulUpload: true});
         }
         catch (error) {
@@ -107,20 +102,6 @@ export default class Add extends Component {
         console.log(formattedRecipe);
 
         return formattedRecipe;
-    }
-    
-    textPropertyChange = (e) => {
-        this.setState({ [e.target.name]: e.target.value }); 
-    }
-
-    checkboxPropertyChange = (e) => {
-        this.setState({ [e.target.name]: e.target.checked }); 
-    }
-    
-    multiPropertyChange = (e) => {
-        // NOTE(map) : This supposedly does not work in IE8, not sure I care though.        
-        console.log([...e.target.selectedOptions].map(option => option.value));
-        this.setState({ [e.target.name]: [...e.target.selectedOptions].map(option => option.value) }); 
     }
     
     ingredientChange = (e) => {

@@ -40,18 +40,25 @@ Tasks to Complete
   when you log in with success you either are taken to the previous page you were just at or to a successful
   login page.
 
-* TODO Have Login redirect
+* DONE Have Login redirect
+  CLOSED: [2019-02-07 Thu 22:35]
   The login page currently just takes you to a successful login message if you login or to an already logged in page
   if the user is already logged in.  It should really redirect to whatever page you wnated to go to.
 
-* TODO Create Logout '[0/3]'
-  1. [ ] Create the link
-  2. [ ] Toggle between Log In/Out based on current status
-  3. [ ] Determine if cookie should expire on log out
-     1. [ ] If yes then expire cookie.
-     2. [ ] If not then figure out what logging out actually means
+* DONE Create Logout '[3/3]'
+  CLOSED: [2019-02-07 Thu 22:34]
+  1. [X] Create the link
+  2. [X] Toggle between Log In/Out based on current status
+  3. [X] Determine if cookie should expire on log out
+     1. [X] If yes then expire cookie.
+     2. [X] If not then figure out what logging out actually means
+
+* TODO Figure out a way to handle updating the header with appropriate state for toggling login/out
 
 * TODO Break out some of the base functionality into a parent class that other classes can then extend.
+  I'm thinking a lot of the basic stuff like setFormAPI and what not.
+
+  One of the key things here would be to move out the custom_axios calls.
 
 * TODO Move the login encryption stuff to a proper location
   I'm not entirely sure what to do here just yet but I will research it and fix the problem.  For now this just lives

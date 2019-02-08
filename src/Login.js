@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Form, Text } from 'informed';
-import { Route, Redirect } from 'react-router';
+import { Redirect } from 'react-router';
 import Errors from './Errors';
-import LoginSuccess from './LoginSuccess';
 import cookie from 'react-cookies';
 
 const crypto = require('crypto');
@@ -31,9 +30,10 @@ export default class Login extends Component {
         const res = await custom_axios.post('/users/login', { username: this.formApi.getState().values.username , password: encryptedPass });
         
         // This is for if i ever want to expire the cookie based on a time.  For now I'm leaving it at session.
-        //const expires =  new Date(Date.now() + 30000);
-        //cookie.save('Authorization', `JWT ${res.data.token}`, { path: '/', expires });
-        cookie.save('Authorization', `JWT ${res.data.token}`, { path: '/' });
+        // Adding 1 day before expiring.
+        const expires =  new Date(Date.now() + (60 * 60 * 24 * 1000));
+        cookie.save('Authorization', `JWT ${res.data.token}`, { path: '/', expires });
+        //cookie.save('Authorization', `JWT ${res.data.token}`, { path: '/' });
 
         this.setState({ successfulLogin: true });
     };
@@ -51,14 +51,15 @@ export default class Login extends Component {
             );
         }
 
-        if (cookie.load('Authorization')) {
+        else if (cookie.load('Authorization')) {
             return "You are already logged in.";
         }
 
-        return (
-            <div>
+        else {
+            return (
+                <div>
 
-              <Errors errors={this.state.errors} />
+                  <Errors errors={this.state.errors} />
 
               <Form id="login-form" getApi={this.setFormApi}>
                 <label htmlFor="username">Username: </label><Text type="text" id="username" field="username" /><br />
@@ -67,6 +68,7 @@ export default class Login extends Component {
               <button onClick={this.handleClick}>LOGIN</button>
             </div>
         );
+        }
     }
 }
 
