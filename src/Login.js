@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Form, Text } from 'informed';
 import { Redirect } from 'react-router';
 import Errors from './Errors';
+import FormComponent from './FormComponent';
 import cookie from 'react-cookies';
 
 const crypto = require('crypto');
-const custom_axios = require('./custom_axios');
 
-export default class Login extends Component {
+export default class Login extends FormComponent {
     constructor(props) {
         super(props);
 
@@ -19,7 +19,6 @@ export default class Login extends Component {
         };
         
         this.handleClick = this.handleClick.bind(this);
-        this.setFormApi = this.setFormApi.bind(this);
     }
     
     handleClick = async () => {
@@ -27,7 +26,7 @@ export default class Login extends Component {
         var encryptedPass = cipher.update(this.formApi.getState().values.password, 'utf8', 'hex');
         encryptedPass += cipher.final('hex');
 
-        const res = await custom_axios.post('/users/login', { username: this.formApi.getState().values.username , password: encryptedPass });
+        const res = await this.runQuery('POST','/users/login',{body: {username: this.formApi.getState().values.username , password: encryptedPass}});
         
         // This is for if i ever want to expire the cookie based on a time.  For now I'm leaving it at session.
         // Adding 1 day before expiring.
@@ -37,10 +36,6 @@ export default class Login extends Component {
 
         this.setState({ successfulLogin: true });
     };
-
-    setFormApi = (formApi) => {
-        this.formApi = formApi;
-    }
 
     render() {
         if (this.state.successfulLogin) {

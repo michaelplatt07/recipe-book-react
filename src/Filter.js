@@ -1,11 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Form, Select, Option } from 'informed';
 import { Redirect } from 'react-router';
 import ReactTooltip from 'react-tooltip';
+import FormComponent from './FormComponent';
 
-const custom_axios = require('./custom_axios');
-
-export default class Filter extends Component {
+export default class Filter extends FormComponent {
     constructor(props) {
         super(props);
 
@@ -27,9 +26,9 @@ export default class Filter extends Component {
     }
 
     async componentDidMount() {        
-        const courseResults = await custom_axios.get('/courses');
-        const cuisineResults = await custom_axios.get('/cuisines');
-        const ingredientResults = await custom_axios.get('/ingredients');
+        const courseResults = await this.runQuery('GET','/courses');
+        const cuisineResults = await this.runQuery('GET','/cuisines');
+        const ingredientResults = await this.runQuery('GET','/ingredients');
         this.setState({ baseCourses: courseResults.data.courses, baseCuisines: cuisineResults.data.cuisines, baseIngredients: ingredientResults.data.ingredients });
     }
 
@@ -49,9 +48,8 @@ export default class Filter extends Component {
                 "&ingredients=" + this.state.ingredients.join('+') : "ingredients=" + this.state.ingredients.join('+');
         }
 
-        const requestUrl = '/recipes/filter' + formattedParams;
-        const recipeList = await custom_axios.get(requestUrl);
-
+        const recipeList = await this.runQuery('GET','/recipes/filter',formattedParams);
+        
         this.setState({ recipes: recipeList.data.recipes });
         this.setState({ fitlerExecuted: true });
         this.setState({ executingFilter: false });

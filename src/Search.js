@@ -3,8 +3,6 @@ import { Form, Text } from 'informed';
 import { Redirect } from 'react-router';
 import FormComponent from './FormComponent';
 
-const custom_axios = require('./custom_axios');
-
 export default class Search extends FormComponent {
     constructor(props) {
         super(props);
@@ -20,22 +18,18 @@ export default class Search extends FormComponent {
     
     handleClick = async () => {
         this.setState({ executingSearch: true });
-        const recipeResults = await this.queryApi(this.formApi.getState().values.searchParams);
+
+        var queryParams = null;
+        if (this.formApi.getState().values.searchParams) {
+            const formattedSearchParams = this.formApi.getState().values.searchParams.split(" ").join("+");
+            queryParams = `?searchParams=${formattedSearchParams}`;
+        }
+        
+        const recipeResults = await this.runQuery('GET','/recipes/search', queryParams);
         this.setState({ recipes: recipeResults.data.recipes });
         this.setState({ searchExecuted: true });
         this.setState({ executingSearch: false });
     }
-
-    queryApi = (searchParams) => {
-        if (searchParams) {
-            const formattedSearchParams = searchParams.split(" ").join("+");
-            const queryParams = `?ingredients=${formattedSearchParams}&course=${formattedSearchParams}&submitted_by=${formattedSearchParams}&cuisine=${formattedSearchParams}`;
-            return custom_axios.get('/recipes/search' + queryParams);
-        }
-        else {
-            return custom_axios.get('/recipes/search');
-        }
-    };
     
     render() {
         return (

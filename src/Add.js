@@ -7,7 +7,6 @@ import Errors from './Errors';
 import cookie from 'react-cookies';
 
 const _ = require('lodash');
-const custom_axios = require('./custom_axios');
 
 export default class Add extends FormComponent {
     constructor(props) {
@@ -43,9 +42,9 @@ export default class Add extends FormComponent {
             this.setState({ redirect: true });
         }
         else {
-            const courseResults = await custom_axios.get('/courses');
-            const cuisineResults = await custom_axios.get('/cuisines');
-            const measurementResults = await custom_axios.get('/measurements');
+            const courseResults = await this.runQuery('GET','/courses');
+            const cuisineResults = await this.runQuery('GET','/cuisines');
+            const measurementResults = await this.runQuery('GET','/measurements');
             this.setState({ baseCourses: courseResults.data.courses, baseCuisines: cuisineResults.data.cuisines, measurementTypes: measurementResults.data.measurements });
         }
     }
@@ -55,7 +54,7 @@ export default class Add extends FormComponent {
         const headers = {'Authorization': cookie.load('Authorization')};
         const recipe = this.formatRecipe();
         try {
-            await custom_axios.post('/recipes/add', recipe, {headers: headers});
+            await this.runQuery('POST','/recipes/add', {body: recipe, headers: headers});
             this.setState({successfulUpload: true});
         }
         catch (error) {

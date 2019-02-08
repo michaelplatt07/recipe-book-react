@@ -55,7 +55,8 @@ Tasks to Complete
 
 * TODO Figure out a way to handle updating the header with appropriate state for toggling login/out
 
-* TODO Break out some of the base functionality into a parent class that other classes can then extend.
+* DONE Break out some of the base functionality into a parent class that other classes can then extend.
+  CLOSED: [2019-02-07 Thu 23:22]
   I'm thinking a lot of the basic stuff like setFormAPI and what not.
 
   One of the key things here would be to move out the custom_axios calls.

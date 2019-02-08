@@ -23,12 +23,32 @@ export default class FormComponent extends Component {
     
     multiPropertyChange = (e) => {
         // NOTE(map) : This supposedly does not work in IE8, not sure I care though.        
-        console.log([...e.target.selectedOptions].map(option => option.value));
         this.setState({ [e.target.name]: [...e.target.selectedOptions].map(option => option.value) }); 
     }
     
-    runQuery = (method, route, parameters) => {
-        // TODO(map) : Implement me.
+    runQuery = (method, route, additionalInfo) => {
+        switch(method) {
+        case "GET":
+            if (additionalInfo) {
+                return custom_axios.get(route + additionalInfo);
+            }
+            else {
+                return custom_axios.get(route);
+            }
+        case "POST":
+            if (additionalInfo) {
+                return custom_axios.post(route, additionalInfo.body, {headers: additionalInfo.headers});
+            }
+            else {
+                console.log("In the FormComponent, there was no body added");
+            }
+            break;
+        case "DELETE":
+            break;
+        default:
+            break;
+        }
+
     }
 
 }
