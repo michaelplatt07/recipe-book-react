@@ -1,0 +1,35 @@
+@media (max-device-width: 479px) {
+}
+
+@media (min-device-width: 480px) {
+    .recipe_preview_block
+    {
+	width: 300px;
+	height: 300px;
+	border: 1px solid black;
+	border-radius: 5px;
+	margin: 3px;
+	background-color: grey;
+    }
+
+    .recipe_title
+    {
+	font-size: 14px;
+	text-align: center;
+	font-weight: bold;
+	text-decoration: underline
+    }
+
+    .cook_time
+    {
+	font-size: 12px;
+	text-align: center;	
+    }
+
+    .prep_time
+    {
+	font-size: 12px;
+	text-align: center;	
+    }
+
+}

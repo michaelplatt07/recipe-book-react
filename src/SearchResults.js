@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import SingleRecipe from './SingleRecipe';
+import SingleRecipePreview from './SingleRecipePreview';
 
 export default class SearchResults extends Component {
     constructor(props) {
@@ -12,7 +12,7 @@ export default class SearchResults extends Component {
     render() {
         if (this.props.location.state.recipes.length > 0){
             return (
-                this.props.location.state.recipes.map((recipe, i) => <SingleRecipe key={i} recipe = {recipe} />)
+                this.props.location.state.recipes.map((recipe, i) => <SingleRecipePreview key={i} recipe = {recipe} />)
             );
         }
         else {
