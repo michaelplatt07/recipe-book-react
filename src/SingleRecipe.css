@@ -1,0 +1,53 @@
+@media (max-device-width: 479px) {
+}
+
+@media (min-device-width: 480px) {
+    .single_recipe_block
+    {
+	border: 1px solid black;
+	border-radius: 10px;
+    }
+
+    .recipe_title
+    {
+	font-size: 14px;
+	text-align: center;
+	font-weight: bold;
+	text-decoration: underline
+    }
+
+    .ingredients
+    {
+	text-align: left;
+    }
+
+    .steps_title
+    {
+	font-size: 14px;
+	text-align: center;
+	font-weight: bold;
+	text-decoration: underline
+    }
+
+    .steps
+    {
+	tex-align: center;
+    }
+    
+    .course_and_cuisine_title
+    {
+	font-size: 14px;
+	text-align: center;
+	font-weight: bold;
+	text-decoration: underline
+    }
+
+    .cook_time_title
+    {
+	font-size: 14px;
+	text-align: center;
+	font-weight: bold;
+	text-decoration: underline
+    }
+
+}

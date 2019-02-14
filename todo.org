@@ -55,6 +55,20 @@ Tasks to Complete
 
 * TODO Figure out a way to handle updating the header with appropriate state for toggling login/out
 
+* TODO Break out the single recipe to a single recipe preview and a full view
+
+* TODO Fix formatting for inserting hours and minutes
+  This apparently currently just inserts a number without a care for having an hours and minutes.
+  Apparently in my code I did not check for there being an hour and minute present but is ok with
+  simply letting the time go in.  Maybe I need to convert this on the front end?
+
+  Currently - I tell the user to input minutes for everything so I can convert but I should check 
+  with someone to see if they would want to put in hours and minutes or just minutes.
+
+* TODO Make images for half and quarter star ratings.
+  This is only a short term fix and should actually be changed to filling in a star a percentage
+  based on the remainder of the rating that isn't a full star.
+
 * DONE Break out some of the base functionality into a parent class that other classes can then extend.
   CLOSED: [2019-02-07 Thu 23:22]
   I'm thinking a lot of the basic stuff like setFormAPI and what not.

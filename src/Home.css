@@ -1,0 +1,41 @@
+@media (max-device-width: 479px) {
+}
+
+@media (min-device-width: 480px) {
+.home_div
+{
+    width: 50%;
+    height: auto;
+    margin-left: calc(25% - 16px);
+    background-color: grey;
+    display: inline-block;
+    padding: 10px;
+    border-left: 3px solid black;
+    border-bottom: 3px solid black;
+    border-right: 3px solid black;
+}
+
+.title
+{
+    font-size: 20px;
+    text-align: center;
+    font-weight: bold;
+    text-decoration: underline
+}
+
+.additional_info
+{
+    text-align: center;
+}
+
+.sample_recipe_notes
+{
+    text-align: center;
+}
+
+.sample_recipe
+{
+    border-top: 1px solid black;
+    text-align: center;
+}
+}
