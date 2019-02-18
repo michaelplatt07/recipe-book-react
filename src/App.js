@@ -17,7 +17,7 @@ class App extends Component {
             <Router>
               <div className="main_div">
                 <Header />
-                
+                <div className="side_div"></div>                
                 <Route exact path="/" component={Home} />
                 <Route path="/filter" component={Filter} />
                 <Route path="/filterResults" component={FilterResults} />
@@ -26,6 +26,7 @@ class App extends Component {
                 <Route path="/add" component={Add} />
                 <Route path="/login" component={Login} />
                 <Route path="/loginSuccess" component={LoginSuccess} />
+                <div className="side_div"></div>
               </div>
             </Router>
         );

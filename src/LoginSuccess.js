@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './LoginSuccess.css';
 
 export default class LoginSuccess extends Component {
     constructor(props) {
@@ -11,7 +12,7 @@ export default class LoginSuccess extends Component {
 
     render() {
         return (
-            <div>
+            <div className="login_success_div">
               <p>Successfully logged in.</p>
             </div>
         );

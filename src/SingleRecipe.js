@@ -70,10 +70,10 @@ export default class SingleRecipe extends Component {
                 Courses and Cuisines
               </p>
               <p className="courses">
-                Courses: {courseList}
+                Serve this during: {courseList}
               </p>
               <p className="cuisines">
-                Cuisines: {cuisineList}
+                Origins: {cuisineList}
               </p>
 
               <p className="cook_time_title">

@@ -83,21 +83,24 @@ Tasks to Complete
 * DONE Fix the call to the filters once the API call is complete.
   CLOSED: [2019-01-24 Thu 13:33]
 
-* TODO Style pages ‘[1/7]'
+* TODO Style pages ‘[2/7]'
   1. [X] Home Page
-  2. [ ] Login Page '[0/1]'
-     1. [ ] Login Success Page
-  3. [ ] Search Page '[0/1]'
-     1. [ ] Search Results Page
-  4. [ ] Filter Page '[0/1]'
-     1. [ ] Filter Results page
+  2. [X] Login Page '[2/2]'
+     1. [X] Login Success Page
+     2. [X] Login Page
+  3. [ ] Search Page '[0/2]'
+     1. [ ] Search Form
+     2. [ ] Search Results Page
+  4. [ ] Filter Page '[0/2]'
+     1. [ ] Filter Form
+     2. [ ] Filter Results page
   5. [ ] Single Recipe Page
   6. [ ] Upload Page
   7. [ ] Error pages
 
-* TODO Port over CSS '[1/6]'
+* TODO Port over CSS '[2/6]'
   1. [X] Home Page
-  2. [ ] Login Page
+  2. [X] Login Page
   3. [ ] Search Page
   4. [ ] Filter Page
   5. [ ] Single Recipe Page

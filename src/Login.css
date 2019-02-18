@@ -2,7 +2,7 @@
 }
 
 @media (min-device-width: 480px) {
-    .home_div
+    .login_div
     {
 	width: calc(100% - 326px);
 	min-height: calc(100% - 100px);
@@ -13,29 +13,11 @@
 	border-left: 3px solid black;
 	border-bottom: 3px solid black;
 	border-right: 3px solid black;
-    }
-
-    .title
-    {
-	font-size: 20px;
-	text-align: center;
-	font-weight: bold;
-	text-decoration: underline
-    }
-
-    .additional_info
-    {
 	text-align: center;
     }
 
-    .sample_recipe_notes
+    #login-form
     {
-	text-align: center;
-    }
-
-    .sample_recipe
-    {
-	border-top: 1px solid black;
 	text-align: center;
     }
 }

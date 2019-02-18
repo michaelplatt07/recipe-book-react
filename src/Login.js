@@ -4,6 +4,7 @@ import { Redirect } from 'react-router';
 import Errors from './Errors';
 import FormComponent from './FormComponent';
 import cookie from 'react-cookies';
+import './Login.css';
 
 const crypto = require('crypto');
 
@@ -52,17 +53,17 @@ export default class Login extends FormComponent {
 
         else {
             return (
-                <div>
+                <div className="login_div">
 
                   <Errors errors={this.state.errors} />
 
-              <Form id="login-form" getApi={this.setFormApi}>
-                <label htmlFor="username">Username: </label><Text type="text" id="username" field="username" /><br />
-                <label htmlFor="password">Password: </label><Text type="password" id="password" field="password" /><br />
-              </Form>
-              <button onClick={this.handleClick}>LOGIN</button>
-            </div>
-        );
+                  <Form id="login-form" getApi={this.setFormApi}>
+                    <label htmlFor="username">Username: </label><Text type="text" id="username" field="username" /><br />
+                    <label htmlFor="password">Password: </label><Text type="password" id="password" field="password" /><br />
+                  </Form>
+                  <button onClick={this.handleClick}>LOGIN</button>
+                </div>
+            );
         }
     }
 }
