@@ -1,6 +1,31 @@
-Tasks to Complete
+* ---------------------------------------------------
+* - Org File for Organizing Tasks RecipeBookServer  -
+* ---------------------------------------------------
 
+* ----------------
+* -   Features   -
+* ----------------
 
+* ----------------
+* - Enhancements -
+* ----------------
+* TODO Require user email for registration [[https://github.com/michaelplatt07/recipe-book-react/issues/1][Issue 1]]
+
+* ----------------
+* -  Bug Report  -
+* ----------------
+
+* ----------------
+* -    UI/UX     -
+* ----------------
+
+* ----------------
+* -   Research   -
+* ----------------
+
+* ----------------
+* -  Completed   -
+* ----------------
 * DONE Finish implementation of the recipe upload
   CLOSED: [2019-01-22 Tue 16:01]
 
@@ -53,6 +78,28 @@ Tasks to Complete
      1. [X] If yes then expire cookie.
      2. [X] If not then figure out what logging out actually means
 
+* DONE Break out some of the base functionality into a parent class that other classes can then extend.
+  CLOSED: [2019-02-07 Thu 23:22]
+  I'm thinking a lot of the basic stuff like setFormAPI and what not.
+
+  One of the key things here would be to move out the custom_axios calls.
+
+* DONE Fix the call to the filters once the API call is complete.
+  CLOSED: [2019-01-24 Thu 13:33]
+
+* TODO Fix filter page.
+  We are currently passing a bad URL to the filter request by building up something like "/recipes/filter?".  The
+  question mark should not be included when the request is sent out.
+
+* TODO Implement grocery list functionality '[0/3]'
+  1. [ ] Create web page to show grocery list
+     1. [ ] Need a print to PDF
+     2. [ ] Need check boxes
+     3. [ ] Need clear selected items.
+     4. [ ] Need clear all items.
+  2. [ ] Add a "addToGroceryList" button on a single recipe page.
+  3. [ ] Add a "addSelectedToGroceryList" button for the results page for search and filter.
+
 * TODO Figure out a way to handle updating the header with appropriate state for toggling login/out
 
 * TODO Break out the single recipe to a single recipe preview and a full view
@@ -69,40 +116,31 @@ Tasks to Complete
   This is only a short term fix and should actually be changed to filling in a star a percentage
   based on the remainder of the rating that isn't a full star.
 
-* DONE Break out some of the base functionality into a parent class that other classes can then extend.
-  CLOSED: [2019-02-07 Thu 23:22]
-  I'm thinking a lot of the basic stuff like setFormAPI and what not.
-
-  One of the key things here would be to move out the custom_axios calls.
-
 * TODO Move the login encryption stuff to a proper location
   I'm not entirely sure what to do here just yet but I will research it and fix the problem.  For now this just lives
   in the Login.js file in the handleClick.  The specifica concern here is that we have the secret for encrypting
   in plain text in the file.
 
-* DONE Fix the call to the filters once the API call is complete.
-  CLOSED: [2019-01-24 Thu 13:33]
-
-* TODO Style pages ‘[2/7]'
+* TODO Style pages ‘[4/7]'
   1. [X] Home Page
   2. [X] Login Page '[2/2]'
      1. [X] Login Success Page
      2. [X] Login Page
-  3. [ ] Search Page '[0/2]'
-     1. [ ] Search Form
-     2. [ ] Search Results Page
-  4. [ ] Filter Page '[0/2]'
-     1. [ ] Filter Form
-     2. [ ] Filter Results page
+  3. [X] Search Page '[2/2]'
+     1. [X] Search Form
+     2. [X] Search Results Page
+  4. [X] Filter Page '[2/2]'
+     1. [X] Filter Form
+     2. [X] Filter Results page
   5. [ ] Single Recipe Page
   6. [ ] Upload Page
   7. [ ] Error pages
 
-* TODO Port over CSS '[2/6]'
+* TODO Port over CSS '[4/6]'
   1. [X] Home Page
   2. [X] Login Page
-  3. [ ] Search Page
-  4. [ ] Filter Page
+  3. [X] Search Page
+  4. [X] Filter Page
   5. [ ] Single Recipe Page
   6. [ ] Upload Page
 
