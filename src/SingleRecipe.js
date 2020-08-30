@@ -80,10 +80,10 @@ export default class SingleRecipe extends Component {
                 Cooking Times
               </p>
               <p className="prep_time">
-                Prep Time: { parseInt(this.state.recipe.prep_time / 60) } hours { parseInt(this.state.recipe.prep_time % 60) } minutes 
+                Prep Time: { parseInt(this.state.recipe.prep_time.hours) } hours { parseInt(this.state.recipe.prep_time.minutes) } minutes 
               </p>
               <p className="cook_time">
-                Cook Time: { parseInt(this.state.recipe.cook_time / 60) } hours { parseInt(this.state.recipe.cook_time % 60) } minutes
+                Cook Time: { parseInt(this.state.recipe.cook_time.hours) } hours { parseInt(this.state.recipe.cook_time.minutes) } minutes
               </p>
 
               <p className="submitted_by">

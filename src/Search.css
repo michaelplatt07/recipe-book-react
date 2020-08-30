@@ -1,0 +1,24 @@
+@media (max-device-width: 479px) {
+}
+
+@media (min-device-width: 480px) {
+    .search_div
+    {
+	width: calc(100% - 326px);
+	min-height: calc(100% - 100px);
+	background-color: grey;
+	display: inline-block;
+	float: left;
+	padding: 10px;
+	border-left: 3px solid black;
+	border-bottom: 3px solid black;
+	border-right: 3px solid black;
+	text-align: center;
+    }
+
+    #search-form
+    {
+	text-align: center;
+    }
+}
+

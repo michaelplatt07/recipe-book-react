@@ -2,6 +2,7 @@ import React from 'react';
 import { Form, Text } from 'informed';
 import { Redirect } from 'react-router';
 import FormComponent from './FormComponent';
+import './Search.css';
 
 export default class Search extends FormComponent {
     constructor(props) {
@@ -33,9 +34,10 @@ export default class Search extends FormComponent {
     
     render() {
         return (
-            <div>
+            <div className="search_div">
               <Form id="search-form" getApi={this.setFormApi}>
                 <label htmlFor="searchParams">Search for recipes that include:</label>
+                <br />
                 <Text field="searchParams" id="searchParams" />
                 <button onClick={this.handleClick}>SEARCH</button>
               </Form>

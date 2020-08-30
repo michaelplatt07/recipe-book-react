@@ -17,10 +17,10 @@ export default class SingleRecipePreview extends Component {
                 {this.state.recipe.text_friendly_name}
               </p>
               <p className="cook_time">
-                Cook Time: { parseInt(this.state.recipe.cook_time / 60) } hours { parseInt(this.state.recipe.cook_time % 60) } minutes
+                Cook Time: { parseInt(this.state.recipe.cook_time.hours) } hours { parseInt(this.state.recipe.cook_time.minutes) } minutes
               </p>
               <p className="prep_time">
-                Prep Time: { parseInt(this.state.recipe.prep_time / 60) } hours { parseInt(this.state.recipe.prep_time % 60) } minutes
+                Prep Time: { parseInt(this.state.recipe.prep_time.hours) } hours { parseInt(this.state.recipe.prep_time.minutes) } minutes
               </p>
             </div>
         );

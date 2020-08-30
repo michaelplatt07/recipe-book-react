@@ -3,6 +3,7 @@ import { Form, Select, Option } from 'informed';
 import { Redirect } from 'react-router';
 import ReactTooltip from 'react-tooltip';
 import FormComponent from './FormComponent';
+import './Filter.css';
 
 export default class Filter extends FormComponent {
     constructor(props) {
@@ -58,8 +59,8 @@ export default class Filter extends FormComponent {
     
     render() {
         return (
-            <div>
-              <Form id="upload-form" getApi={this.setFormApi}>
+            <div className="filter_div">
+              <Form id="filter-form" getApi={this.setFormApi}>
                 <p>
                   Select options below to filter by.
                 </p>

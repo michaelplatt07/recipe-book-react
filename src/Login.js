@@ -27,6 +27,9 @@ export default class Login extends FormComponent {
         var encryptedPass = cipher.update(this.formApi.getState().values.password, 'utf8', 'hex');
         encryptedPass += cipher.final('hex');
 
+	    // TODO(map) Remove this logging dtatement at some point
+        console.log(encryptedPass);
+        
         const res = await this.runQuery('POST','/users/login',{body: {username: this.formApi.getState().values.username , password: encryptedPass}});
         
         // This is for if i ever want to expire the cookie based on a time.  For now I'm leaving it at session.

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import SingleRecipe from './SingleRecipe';
+import SingleRecipePreview from './SingleRecipePreview';
+import './FilterResults.css';
 
 export default class FilterResults extends Component {
     constructor(props) {
@@ -13,7 +14,11 @@ export default class FilterResults extends Component {
         console.log("In the render");
         if (this.props.location.state.recipes.length > 0){
             return (
-                this.props.location.state.recipes.map((recipe, i) => <SingleRecipe key={i} recipe = {recipe} />)
+                <div className="filter_results_div">
+                  {
+                      this.props.location.state.recipes.map((recipe, i) => <SingleRecipePreview key={i} recipe = {recipe} />)
+                  }
+                </div>
             );
         }
         else {

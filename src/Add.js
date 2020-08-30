@@ -22,11 +22,16 @@ export default class Add extends FormComponent {
             courses: [],
             ingredients: [],
             instructions: [],
+		categories: [],
+		chef_notes: "",
+		serving_sizes: "",
             
             baseCourses: [],
             baseCuisines: [],
             measurementTypes: [],
-
+            baseCategories: [],
+            baseServingSizes: [],
+            
             attemptedUpload: false,
             successfulUpload: false,
             errors: [],
@@ -45,7 +50,14 @@ export default class Add extends FormComponent {
             const courseResults = await this.runQuery('GET','/courses');
             const cuisineResults = await this.runQuery('GET','/cuisines');
             const measurementResults = await this.runQuery('GET','/measurements');
-            this.setState({ baseCourses: courseResults.data.courses, baseCuisines: cuisineResults.data.cuisines, measurementTypes: measurementResults.data.measurements });
+            const categoryResults = await this.runQuery('GET','/categories');
+            const servingSizeResults = await this.runQuery('GET','/servingSizes');
+            this.setState({ baseCourses: courseResults.data.courses,
+                            baseCuisines: cuisineResults.data.cuisines,
+                            measurementTypes:
+                            measurementResults.data.measurements,
+                            baseCategories: categoryResults.data.categories,
+                            baseServingSizes: servingSizeResults.data.servingSizes});
         }
     }
     
@@ -95,8 +107,11 @@ export default class Add extends FormComponent {
             description: this.state.description,
             searchable: this.state.status,
             courses: this.state.courses,
+		categories: this.state.categories,
             ingredients: formattedIngredientList,
-            steps: this.state.instructions
+            steps: this.state.instructions,
+		chef_notes: this.state.chef_notes,
+		serving_sizes: this.state.serving_sizes
         };
         console.log(formattedRecipe);
 
@@ -176,7 +191,30 @@ export default class Add extends FormComponent {
                                   <Option key={courseKey} value={course.search_name}>{course.name}</Option>
                               );
                           })
-                      }                </Select><br />
+                      }
+                    </Select><br />
+                    <label htmlFor="categories" data-tip="Select as many categories as desired using CTRL and click">Category: </label>
+                    <Select field="categories" id="categories" multiple onChange={this.multiPropertyChange}>
+                      {
+                          this.state.baseCategories.map((category, index) => {
+                              const categoryKey = `category-${index}`;
+                              return (
+                                  <Option key={categoryKey} value={category.search_name}>{category.name}</Option>
+                              );
+                          })
+                      }
+                    </Select><br />
+                    <label htmlFor="serving_sizes" data-tip="Select as many ServingSizes as desired using CTRL and click">Serving Sizes: </label>
+                    <Select field="serving_sizes" id="serving_sizes" multiple onChange={this.multiPropertyChange}>
+                      {
+                          this.state.baseServingSizes.map((servingSize, index) => {
+                              const servingSizeKey = `serving-size-${index}`;
+                              return (
+                                  <Option key={servingSizeKey} value={servingSize.search_range}>{servingSize.display_range}</Option>
+                              );
+                          })
+                      }
+                    </Select><br />
                     <label htmlFor="cuisines" data-tip="Select as many cuisines as desired using CTRL and click">Cuisine: </label>
                     <Select field="cuisines" id="cuisines" multiple onChange={this.multiPropertyChange}>
                       {
@@ -216,7 +254,8 @@ export default class Add extends FormComponent {
                     </div>
                     <br />
                     <label htmlFor="description">Description: </label><TextArea type="text" id="description" field="description" onChange={this.textPropertyChange} /><br />
-                    <label htmlFor="status" data-tip="For determining if you want to make the recipe searchable by others.">Public: </label>
+                    <label htmlFor="chef_notes">Chef Notes: </label><TextArea type="text" id="chef_notes" field="chef_notes" onChange={this.textPropertyChange} /><br />
+<label htmlFor="status" data-tip="For determining if you want to make the recipe searchable by others.">Public: </label>
                     <Checkbox field="status" id="status" onChange={this.checkboxPropertyChange} />
                     <br />
                     <button onClick={this.handleClick}>ADD</button>

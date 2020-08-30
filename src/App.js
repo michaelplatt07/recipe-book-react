@@ -9,6 +9,7 @@ import SearchResults from './SearchResults';
 import Add from './Add';
 import Login from './Login';
 import LoginSuccess from './LoginSuccess';
+// import RandomRecipe from './RandomRecipe';
 import './App.css';
 
 class App extends Component {
@@ -26,6 +27,7 @@ class App extends Component {
                 <Route path="/add" component={Add} />
                 <Route path="/login" component={Login} />
                 <Route path="/loginSuccess" component={LoginSuccess} />
+                {/* <Route path="/random" component={RandomRecipe} /> */}
                 <div className="side_div"></div>
               </div>
             </Router>
