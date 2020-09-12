@@ -81,7 +81,7 @@ export default class Add extends FormComponent {
     formatRecipe = () => {
         // NOTE(map) : Formatting the ingredients here
         const formattedIngredientList = [];
-        this.state.ingredients.forEach((ingredient) => {
+        this.state.ingredients.split('\n').forEach((ingredient) => {
             const splitIngredients = ingredient.split(" ");
             if (this.state.measurementTypes.some(measurement => splitIngredients[1] === measurement.name)) {
                 formattedIngredientList.push({
@@ -109,7 +109,7 @@ export default class Add extends FormComponent {
             courses: this.state.courses,
 		categories: this.state.categories,
             ingredients: formattedIngredientList,
-            steps: this.state.instructions,
+            steps: this.state.instructions.split('\n'),
 		chef_notes: this.state.chef_notes,
 		serving_sizes: this.state.serving_sizes
         };
@@ -117,49 +117,7 @@ export default class Add extends FormComponent {
 
         return formattedRecipe;
     }
-    
-    ingredientChange = (e) => {
-        const index = e.target.id.split("-").pop();
-        const updatedList = this.state.ingredients;
-        updatedList[index] = e.target.value;
-        this.setState({ ingredients: updatedList });
-    }
-    
-    addIngredient = (e) => {
-        this.setState((prevState) => ({
-            ingredients: [...prevState.ingredients, ""],
-        }));
-    }
-
-    removeIngredient = (e) => {
-        let newList = this.state.ingredients.filter((ingredient) => {
-            return ingredient !== e.target.value;
-        });
-        
-        this.setState({ ingredients: newList });
-    }
-
-    instructionChange = (e) => {
-        const index = e.target.id.split("-").pop();
-        const updatedList = this.state.instructions;
-        updatedList[index] = e.target.value;
-        this.setState({ instructions: updatedList });
-    }
-
-    addInstruction = (e) => {
-        this.setState((prevState) => ({
-            instructions: [...prevState.instructions, ""],
-        }));
-    }
-
-    removeInstruction = (e) => {
-        let newList = this.state.instructions.filter((instruction) => {
-            return instruction !== e.target.value;
-        });
-        
-        this.setState({ instructions: newList });
-    }
-    
+   
     render() {
         if (this.state.redirect) {
             return (
@@ -226,33 +184,10 @@ export default class Add extends FormComponent {
                           })
                       }
                     </Select><br />
-                    <label htmlFor="ingredients">Ingredients: </label><button data-tip="Ingredients should follow the format of NUMBER UNITS INGREDIENT.  If no units are needed (ie a whole carrot), simply exclude the units."onClick={this.addIngredient}>+</button>
-                    <div id="ingredients">
-                      {
-                          this.state.ingredients.map((ingredient, index) => {
-                              let ingredientIndex = `ingredient-${index}`;
-                              return (
-                                  <div key={index}>
-                                    <input type="text" id={ingredientIndex} field={ingredient} value={ingredient} index={index} onChange={this.ingredientChange} /><button value={ingredient} onClick={this.removeIngredient}>-</button>
-                                  </div>
-                              );
-                          })
-                      }
-                    </div>
-                    <label htmlFor="instructions">Instructions: </label><button onClick={this.addInstruction}>+</button>
-                    <div id="instructions">
-                      {
-                          this.state.instructions.map((instruction, index) => {
-                              let instructionIndex = `instruction-${index}`;
-                              return (
-                                  <div key={index}>
-                                    <input type="text" id={instructionIndex} field={instruction} value={instruction} index={index} onChange={this.instructionChange} /><button value={instruction} onClick={this.removeInstruction}>-</button>
-                                  </div>
-                              );
-                          })
-                      }
-                    </div>
-                    <br />
+                    <label htmlFor="ingredients">Ingredients: </label>
+		    <TextArea type="text" id="ingredients" field="ingredients" onChange={this.textPropertyChange} /><br />
+                    <label htmlFor="instructions">Instructions: </label>
+		   <TextArea type="text" id="instructions" field="instructions" onChange={this.textPropertyChange} /><br />
                     <label htmlFor="description">Description: </label><TextArea type="text" id="description" field="description" onChange={this.textPropertyChange} /><br />
                     <label htmlFor="chef_notes">Chef Notes: </label><TextArea type="text" id="chef_notes" field="chef_notes" onChange={this.textPropertyChange} /><br />
 <label htmlFor="status" data-tip="For determining if you want to make the recipe searchable by others.">Public: </label>
