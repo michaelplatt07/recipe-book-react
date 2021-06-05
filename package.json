@@ -10,7 +10,7 @@
     "react-cookies": "^0.1.0",
     "react-dom": "^16.6.3",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "^3.4.3",
+    "react-scripts": "^4.0.3",
     "react-tooltip": "^3.9.2"
   },
   "scripts": {
