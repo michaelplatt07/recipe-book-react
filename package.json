@@ -5,6 +5,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "informed": "^1.10.12",
+    "is-svg": "^4.2.2",
     "react": "^16.6.3",
     "react-cookie": "^3.0.8",
     "react-cookies": "^0.1.0",
